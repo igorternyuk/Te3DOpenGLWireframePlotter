@@ -1,0 +1,12 @@
+[Expression]
+sin(0.00001 * (X * X + Y * Y)) * 300 + 300
+[Lengthwise lines Xmin Xmax dX Ymin Ymax dY]
+-500 500 50 -500 500 50 
+[Transversal lines Ymin Ymax dY Xmin Xmax dX]
+-500 500 50 -500 500 50 
+[Frustum left right bottom top near_val far_val]
+-500 500 -500 500 500 2000
+[Surface color RGB]
+0 255 0
+[Background color RGB]
+0 0 0
