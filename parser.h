@@ -15,29 +15,37 @@ struct Expression {
 };
 
 class Parser {
-private:
-    const char* input;
-    std::string inputExprWithVariables;
-    std::vector<std::string> tokens =
-    { "+", "-", "**", "*", "/","(", ")",  "<=", ">=",
-      "<", ">", "==", "!=", "&", "|","^","!", "mod",
-      "abs", "sign", "cbrt","sqrt", "sqr", "cube", "gradtorad",
-      "radtograd", "exp","ln", "log2", "log8","log10","log16",
-      "sin","cos","tg","ctg","secans","csecans",
-      "arcsin","arccos","arctg","arcctg","arcsecans", "arccsecans",
-      "sh","ch", "th", "cth","sech","csech",
-      "arcsh","arcch", "arcth","arccth","arcsech","arccsech"};
 public:
-    Parser(std::string inputExpr);
-    Parser(std::string inputExpr, std::vector<std::pair<char, double> > variable);
+    Parser(const std::string &inputString, std::vector<std::pair<char,double>> vars);
+    Parser(const std::string &inputString, std::vector<std::pair<char,double>> vars, std::string m_angleUnit);
     double calculateExpression();
-    ~Parser();
 private:
+    const char* m_input;
+    std::string m_angleUnit;
+    std::string m_inputWithVariables;
+    std::vector<std::pair<char, double>> m_vctVariables;
+    static const struct MyTokens
+    {
+        const std::vector<std::string> tokens =
+        {
+          "+", "-","e", "**", "*", "/","(", ")",  "<=", ">=",
+          "<", ">", "==", "!=", "&", "|","^","!", "mod", "abs",
+          "factorial","sign", "inv", "cbrt","sqrt", "sqr", "cube",
+          "gradtorad", "radtograd", "_exp","ln", "log2", "log8",
+          "log10","log16", "sin","cos","tg","ctg","secans","csecans",
+          "arcsin","arccos","arctg","arcctg","arcsecans", "arccsecans",
+          "sh","ch", "th", "cth","sech","csech", "arcsh","arcch",
+          "arcth","arccth","arcsech","arccsech"
+        };
+
+    } m_tokens;
+
     std::string parseToken();
     Expression parseUnaryExpression();
     Expression parseBinaryExpression(int minPriority);
     Expression parse();
     double evaluateExpression(const Expression &e);
+    long int factorial(int n);
 };
 
 #endif // PARSER_H
